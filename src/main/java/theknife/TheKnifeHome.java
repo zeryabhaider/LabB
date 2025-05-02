@@ -4,6 +4,13 @@
  */
 package theknife;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
 /**
  *
  * @author lucav
@@ -209,6 +216,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -276,8 +284,51 @@ public class TheKnifeHome extends javax.swing.JFrame {
                 new TheKnifeHome().setVisible(true);
             }
         });
+        
+        // connessione al Database
+        String url = "jdbc:postgresql://localhost:5432/miodatabase";
+        String user = "mio_utente";
+        String password = "mia_password";
+        
+        Statement stmt =null;
+        ResultSet rs=null;
+        
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            
+            stmt= conn.createStatement();
+            String sql="";
+            rs=stmt.executeQuery(sql);
+            
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Errore di connessione: " + e.getMessage());
+        }
     }
-
+    
+    /**
+    * Calcola la distanza in chilometri tra due coordinate geografiche.
+    *
+    * @param lat1 la latitudine della prima coordinata.
+    * @param lon1 la longitudine della prima coordinata.
+    * @param lat2 la latitudine della seconda coordinata.
+    * @param lon2 la longitudine della seconda coordinata.
+    * @return la distanza in chilometri tra le due coordinate.
+    */
+    public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        int asd = 6371;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return asd * b;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;

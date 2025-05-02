@@ -4,6 +4,12 @@
  */
 package theknife;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author lucav
@@ -42,7 +48,7 @@ public class Registrati extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField4 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nome:");
 
@@ -158,10 +164,45 @@ public class Registrati extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String nome= jTextField1.getText();
+        String cognome= jTextField2.getText();
+        String email= jTextField3.getText();
+        String psw= jPasswordField1.getText();
+        String data= jTextField4.getText();
+        String luogo= jTextField6.getText();
+        String ruolo= (String) jComboBox1.getSelectedItem();
+        
+        String url = "jdbc:postgresql://localhost:5432/miodatabase";
+        String user = "mio_utente";
+        String password = "mia_password";
+        
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            ResultSet rs= null;
+            Statement stmt= conn.createStatement();
+            String sql="SELECT * FROM utenti WHERE email ="+ email +"";
+            try{
+                rs=stmt.executeQuery(sql);
+                if(rs==null){
+                    sql="INSERT INTO utenti (nome, cognome,email,psw,data,lougo,ruolo) VALUES ("+nome+","+cognome+","+email+","+psw+","+data+","+luogo+","+ruolo+")";
+                    rs=stmt.executeQuery(sql);
+                }
+            }
+            catch(SQLException e){
+                System.out.println("Errore: durante la lettura delle credenziali: " + e.getMessage());
+                //new Error("Errore: durante la lettura delle credenziali: " + e.getMessage());
+            }
+            
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Errore di connessione: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -171,42 +212,6 @@ public class Registrati extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registrati.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registrati.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registrati.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registrati.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Registrati().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
