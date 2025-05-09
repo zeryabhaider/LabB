@@ -45,6 +45,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -105,6 +106,13 @@ public class TheKnifeHome extends javax.swing.JFrame {
         );
 
         jScrollPane1.setViewportView(jPanel1);
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("The Knife");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +184,8 @@ public class TheKnifeHome extends javax.swing.JFrame {
                                 .addComponent(jCheckBox1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox2)
+                                .addGap(32, 32, 32)
+                                .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -209,9 +219,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -251,6 +262,12 @@ public class TheKnifeHome extends javax.swing.JFrame {
         new AggRist().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.out.println(user+ruolo);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public static String user= null;
+    public static String ruolo=null;
     /**
      * @param args the command line arguments
      */
@@ -286,9 +303,9 @@ public class TheKnifeHome extends javax.swing.JFrame {
         });
         
         // connessione al Database
-        String url = "jdbc:postgresql://localhost:5432/miodatabase";
-        String user = "mio_utente";
-        String password = "mia_password";
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
         
         Statement stmt =null;
         ResultSet rs=null;
@@ -297,10 +314,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
             // Connessione al database
             Connection conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connessione avvenuta con successo!");
-            
             stmt= conn.createStatement();
-            String sql="";
-            rs=stmt.executeQuery(sql);
             
             conn.close();
         } catch (SQLException e) {
@@ -331,6 +345,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox1;

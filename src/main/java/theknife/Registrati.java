@@ -79,7 +79,7 @@ public class Registrati extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Ristoratore" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cliente", "ristoratore" }));
 
         jTextField4.setText("//");
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -143,7 +143,7 @@ public class Registrati extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -176,9 +176,10 @@ public class Registrati extends javax.swing.JFrame {
         String luogo= jTextField6.getText();
         String ruolo= (String) jComboBox1.getSelectedItem();
         
-        String url = "jdbc:postgresql://localhost:5432/miodatabase";
-        String user = "mio_utente";
-        String password = "mia_password";
+        
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
         
         try {
             // Connessione al database
@@ -186,12 +187,12 @@ public class Registrati extends javax.swing.JFrame {
             System.out.println("Connessione avvenuta con successo!");
             ResultSet rs= null;
             Statement stmt= conn.createStatement();
-            String sql="SELECT * FROM utenti WHERE email ="+ email +"";
+            String sql="SELECT * FROM registrazione WHERE email ='"+ email +"'";          // controllo dell' esistenza della mail
             try{
                 rs=stmt.executeQuery(sql);
-                if(rs==null){
-                    sql="INSERT INTO utenti (nome, cognome,email,psw,data,lougo,ruolo) VALUES ("+nome+","+cognome+","+email+","+psw+","+data+","+luogo+","+ruolo+")";
-                    rs=stmt.executeQuery(sql);
+                if(rs.next()){}else{
+                    sql="INSERT INTO registrazione (nome, cognome,email,password,data_nascita,luogo_domicilio,ruolo) VALUES ('"+nome+"','"+cognome+"','"+email+"','"+psw+"','"+data+"','"+luogo+"','"+ruolo+"')";
+                    int rowsInserted =stmt.executeUpdate(sql);
                 }
             }
             catch(SQLException e){

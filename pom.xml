@@ -10,4 +10,15 @@
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>theknife.TheKnife</exec.mainClass>
     </properties>
+    
+    <dependencies>
+    <!-- Altre dipendenze qui -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version> <!-- Sostituisci con l'ultima versione se vuoi -->
+        </dependency>
+    </dependencies>
+
+    
 </project>

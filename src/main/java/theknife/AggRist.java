@@ -233,9 +233,9 @@ public class AggRist extends javax.swing.JFrame {
         String ntell= jTextField6.getText();
         String cucina= jTextField7.getText();
         
-        String url = "jdbc:postgresql://localhost:5432/miodatabase";
-        String user = "mio_utente";
-        String password = "mia_password";
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
         
         try {
             // Connessione al database

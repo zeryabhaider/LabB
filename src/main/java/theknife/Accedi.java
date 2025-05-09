@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import static theknife.TheKnifeHome.ruolo;
 
 /**
  *
@@ -108,9 +109,9 @@ public class Accedi extends javax.swing.JFrame {
         String email= jTextField1.getText();
         String psw= jTextField2.getText();
         
-        String url = "jdbc:postgresql://localhost:5432/miodatabase";
-        String user = "mio_utente";
-        String password = "mia_password";
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
         
         try {
             // Connessione al database
@@ -118,9 +119,23 @@ public class Accedi extends javax.swing.JFrame {
             System.out.println("Connessione avvenuta con successo!");
             
             Statement stmt= conn.createStatement();
-            String sql="SELECT * FROM utenti WHERE email ="+ email +"AND password = "+psw+"";
+            String sql="SELECT * FROM registrazione WHERE email ='"+ email +"' AND password = '"+psw+"'";
+            
+            // Accesso dell' utente
             try{
                 ResultSet rs=stmt.executeQuery(sql);
+                TheKnifeHome.user=email;
+                sql="SELECT ruolo FROM registrazione WHERE email='"+email+"'";
+                rs=stmt.executeQuery(sql);
+                
+                // Controllo dell' esistenza di almeno una riga di risultato della query
+                if(rs.next()){
+                    TheKnifeHome.ruolo=rs.getString("ruolo");
+                    System.out.println(rs);
+                }else{
+                    System.out.println("vouto");
+                }
+                Accedi.this.dispose();
             }
             catch(SQLException e){
                 System.out.println("Errore: durante la lettura delle credenziali: " + e.getMessage());
