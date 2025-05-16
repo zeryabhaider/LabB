@@ -124,27 +124,30 @@ public class Accedi extends javax.swing.JFrame {
             // Accesso dell' utente
             try{
                 ResultSet rs=stmt.executeQuery(sql);
-                TheKnifeHome.user=email;
+                TheKnifeHome.utente=email;
                 sql="SELECT ruolo FROM registrazione WHERE email='"+email+"'";
                 rs=stmt.executeQuery(sql);
                 
                 // Controllo dell' esistenza di almeno una riga di risultato della query
                 if(rs.next()){
+                    new Operazione().setVisible(true);
                     TheKnifeHome.ruolo=rs.getString("ruolo");
-                    System.out.println(rs);
+                    if(TheKnifeHome.ruolo.equals("cliente")){
+                        TheKnifeHome.MostraBottoneUtente();
+                    }else{
+                        TheKnifeHome.MostraBottoneRist();
+                    }
                 }else{
-                    System.out.println("vouto");
+                    new Errore("L'utente non esiste").setVisible(true);
                 }
                 Accedi.this.dispose();
             }
             catch(SQLException e){
-                System.out.println("Errore: durante la lettura delle credenziali: " + e.getMessage());
-                //new Error("Errore: durante la lettura delle credenziali: " + e.getMessage());
+                new Errore("<html>Errore durante l'inserimento delle credenziali:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);
             }
-            
             conn.close();
         } catch (SQLException e) {
-            System.out.println("Errore di connessione: " + e.getMessage());
+            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
