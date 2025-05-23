@@ -4,11 +4,17 @@
  */
 package theknife;
 
+import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import javax.swing.JButton;
+import theknife.Errore;
 
 
 /**
@@ -69,6 +75,11 @@ public class TheKnifeHome extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(38, 117, 191));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Cerca");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Vicinanza ");
 
@@ -88,17 +99,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tutti", "1 Stella", "2 stelle", "3 stelle", "4 stelle", "5 stelle" }));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
-        );
-
+        jPanel1.setLayout(new java.awt.GridLayout());
         jScrollPane1.setViewportView(jPanel1);
 
         jButton2.setText("jButton2");
@@ -284,6 +285,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
         NascondiBottone();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cercaRistoranti();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public static String utente= null;
     public static String ruolo=null;
     /**
@@ -383,6 +388,100 @@ public class TheKnifeHome extends javax.swing.JFrame {
         Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return asd * b;
+    }
+    
+    public void cercaRistoranti() {
+        String line;
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        Statement stmt =null;
+        ResultSet rs=null;
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            stmt= conn.createStatement();
+            
+            if (jTextField1.getText().length() == 0) {
+                jPanel1.revalidate();
+            } else {
+            if (jTextField1.getText().trim().contains(",")) {
+                System.out.println("Info: ricerca mediante coordinate");
+                String[] input = jTextField1.getText().trim().split(",");
+                double inputLat = Double.parseDouble(input[0].trim());
+                double inputLon = Double.parseDouble(input[1].trim());
+                try{
+                    String sql="SELECT nome,lati,longi FROM ristoranti";
+                    rs=stmt.executeQuery(sql);
+                    while (rs.next()) {
+                        System.out.println("dentro coordinate");
+                        String dataLat=rs.getString("lati");
+                        String dataLongi=rs.getString("longi");
+                        String nome=rs.getString("nome");
+                        double lat = Double.parseDouble(dataLat);
+                        double lon = Double.parseDouble(dataLongi);
+                        double distance = calculateDistance(inputLat, inputLon, lat, lon);
+                        if ((int)distance <= jSlider1.getValue()) {
+                            System.out.println("calcolo coordinate");
+                            JButton bottone = new JButton();
+                            bottone.setText("franco");
+                            bottone.addActionListener((ActionEvent e) -> {
+                                new VisualizzaRistorante().setVisible(true);
+                            });
+                            jPanel1.add(bottone);
+                        }
+                    }jPanel1.revalidate();
+                jPanel1.revalidate();
+                } catch (SQLException e) {
+                    new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>" + e.getMessage()).setVisible(true);
+                }
+            }else{
+                jPanel1.removeAll();
+                try {
+                    String sql="SELECT lati,longi FROM ristoranti WHERE nome='"+jTextField1.getText()+"'";
+                    rs=stmt.executeQuery(sql);
+                    if (rs.next()) {
+                        String inputLati=rs.getString("lati");
+                        String inputLongi=rs.getString("longi");
+                        double inputLat = Double.parseDouble(inputLati);
+                        double inputLon = Double.parseDouble(inputLongi);
+                        sql="SELECT nome,lati,longi FROM ristoranti";
+                        try{
+                            ResultSet rs1=stmt.executeQuery(sql);
+                            while(rs1.next()){
+                                String dataLat=rs1.getString("lati");
+                                String dataLongi=rs1.getString("longi");
+                                String nome1=rs1.getString("nome");
+                                double lat = Double.parseDouble(dataLat);
+                                double lon = Double.parseDouble(dataLongi);
+                                double distance = calculateDistance(inputLat, inputLon, lat, lon);
+                                if((int)distance <= jSlider1.getValue()){
+                                    JButton bottone = new JButton();
+                                    bottone.setText("'"+nome1+"'");
+                                    bottone.addActionListener((ActionEvent e) -> {
+                                        new VisualizzaRistorante().setVisible(true);
+                                    });
+                                    jPanel1.add(bottone);
+                                }
+                            }jPanel1.revalidate();
+                        }catch(SQLException e){
+                            new Errore("<html>Errore durante la ricerca: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+                        }
+                    }else{
+                        new Errore("Il ristorante non esiste").setVisible(true);
+                    }
+                    jPanel1.revalidate();
+                    } catch (SQLException e) {
+                        new Errore("Errore durante la ricerca: " + e.getMessage()).setVisible(true);
+                    }
+                }
+            }
+        jPanel1.repaint();
+        conn.close();
+        } catch (SQLException e) {
+            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

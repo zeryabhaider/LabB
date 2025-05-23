@@ -195,7 +195,6 @@ public class Registrati extends javax.swing.JFrame {
                 }
             }
             catch(SQLException e){
-                System.out.println("Errore: durante la lettura delle credenziali: " + e.getMessage());
                 new Errore("<html>Errore durante l'inserimento delle credenziali:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);
             }
             

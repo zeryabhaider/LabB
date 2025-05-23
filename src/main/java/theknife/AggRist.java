@@ -277,6 +277,7 @@ public class AggRist extends javax.swing.JFrame {
         String cucina= jTextField7.getText();
         boolean delivery=jCheckBox1.isSelected();
         boolean prenotazioni=jCheckBox2.isSelected();
+        String fascia= (String) jComboBox2.getSelectedItem();
         
         String url = "jdbc:postgresql://localhost:5432/postgres";
         String user = "postgres";
@@ -294,7 +295,7 @@ public class AggRist extends javax.swing.JFrame {
                 if(rs.next()){
                     new Errore("Il ristorante è già stato registrato:").setVisible(true);
                 }else{
-                    sql="INSERT INTO ristoranti (nome, indirizzo, citta, stelle, lati, longi, Ntell, cucina, emailU, delivery, prenotazioni, fascia) VALUES ('"+nome+"','"+indirizzo+"','"+luogo+"','"+stelle+"','"+lati+"','"+longi+"','"+Ntell+"','"+cucina+"','"+TheKnifeHome.utente+"','"+delivery+"','"+prenotazioni+"')";
+                    sql="INSERT INTO ristoranti (nome, indirizzo, citta, stelle, lati, longi, n_tell, cucina, email_u, delivery, prenotazioni, fascia) VALUES ('"+nome+"','"+indirizzo+"','"+luogo+"','"+stelle+"','"+lati+"','"+longi+"','"+Ntell+"','"+cucina+"','"+TheKnifeHome.utente+"','"+delivery+"','"+prenotazioni+"','"+fascia+"')";
                         int rowsInserted =stmt.executeUpdate(sql);
                         new Operazione().setVisible(true);
                 }
