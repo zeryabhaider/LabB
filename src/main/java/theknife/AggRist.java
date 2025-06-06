@@ -137,7 +137,7 @@ public class AggRist extends javax.swing.JFrame {
 
         jLabel9.setText("Fascia:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Economy", "Standard", "Premium", "Luxury" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "€", "€€", "€€€", "€€€€" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -5,16 +5,12 @@
 package theknife;
 
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import javax.swing.JButton;
-import theknife.Errore;
 
 
 /**
@@ -51,7 +47,6 @@ public class TheKnifeHome extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -97,19 +92,12 @@ public class TheKnifeHome extends javax.swing.JFrame {
 
         jCheckBox2.setText("prenotazioni");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tutti", "1 Stella", "2 stelle", "3 stelle", "4 stelle", "5 stelle" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "1 Stella", "2 Stelle", "3 Stelle", "4 Stelle", "5 Stelle" }));
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane1.setViewportView(jPanel1);
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Economy", "Standard", "Premium", "Luxury" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "€", "€€", "€€€", "€€€€" }));
 
         jMenu1.setText("The Knife");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -194,8 +182,6 @@ public class TheKnifeHome extends javax.swing.JFrame {
                                 .addComponent(jCheckBox1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox2)
-                                .addGap(32, 32, 32)
-                                .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -232,10 +218,9 @@ public class TheKnifeHome extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -264,19 +249,70 @@ public class TheKnifeHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        //new Preferiti().setVisible(true);
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        
+        try {
+            // Connessione al database
+            jPanel1.removeAll();
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            Statement stmt= conn.createStatement();
+            String sql="SELECT DISTINCT nome,lati,longi FROM ristoranti JOIN preferiti ON id= id_ristorante WHERE id_ristorante IN(SELECT id_ristorante FROM preferiti WHERE email_utente='"+utente+"')";
+            ResultSet rs=stmt.executeQuery(sql);
+            jPanel1.removeAll();
+            while (rs.next()) {
+                String dataLat=rs.getString("lati");
+                String dataLongi=rs.getString("longi");
+                String nome=rs.getString("nome");
+                JButton bottone = new JButton();
+                bottone.setText("'"+nome+"'");
+                bottone.addActionListener((ActionEvent e) -> {
+                    new VisualizzaRistorante(nome,dataLat,dataLongi).setVisible(true);
+                });
+                jPanel1.add(bottone);
+            }jPanel1.revalidate();
+            
+            conn.close();
+        } catch (SQLException e) {
+            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         new AggRist().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.out.println(utente+ruolo);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            Statement stmt= conn.createStatement();
+            String sql="SELECT nome,lati,longi FROM ristoranti WHERE email_u='"+utente+"'";
+            ResultSet rs=stmt.executeQuery(sql);
+            jPanel1.removeAll();
+            while (rs.next()) {
+                String dataLat=rs.getString("lati");
+                String dataLongi=rs.getString("longi");
+                String nome=rs.getString("nome");
+                JButton bottone = new JButton();
+                bottone.setText("'"+nome+"'");
+                bottone.addActionListener((ActionEvent e) -> {
+                    new VisualizzaRistorante(nome,dataLat,dataLongi).setVisible(true);
+                });
+                jPanel1.add(bottone);
+            }jPanel1.revalidate();
+            
+            conn.close();
+        } catch (SQLException e) {
+            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -324,25 +360,6 @@ public class TheKnifeHome extends javax.swing.JFrame {
                 new TheKnifeHome().setVisible(true);
             }
         });
-        
-        // connessione al Database
-        String url = "jdbc:postgresql://localhost:5432/postgres";
-        String user = "postgres";
-        String password = "1";
-        
-        Statement stmt =null;
-        ResultSet rs=null;
-        
-        try {
-            // Connessione al database
-            Connection conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connessione avvenuta con successo!");
-            stmt= conn.createStatement();
-            
-            conn.close();
-        } catch (SQLException e) {
-            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
-        }
     }
     
     public static void NascondiBottone(){
@@ -391,7 +408,6 @@ public class TheKnifeHome extends javax.swing.JFrame {
     }
     
     public void cercaRistoranti() {
-        String line;
         String url = "jdbc:postgresql://localhost:5432/postgres";
         String user = "postgres";
         String password = "1";
@@ -404,39 +420,102 @@ public class TheKnifeHome extends javax.swing.JFrame {
             stmt= conn.createStatement();
             
             if (jTextField1.getText().length() == 0) {
-                jPanel1.revalidate();
-            } else {
-            if (jTextField1.getText().trim().contains(",")) {
-                System.out.println("Info: ricerca mediante coordinate");
-                String[] input = jTextField1.getText().trim().split(",");
-                double inputLat = Double.parseDouble(input[0].trim());
-                double inputLon = Double.parseDouble(input[1].trim());
+                jPanel1.removeAll();
                 try{
-                    String sql="SELECT nome,lati,longi FROM ristoranti";
+                    String sql;
+                    if(jComboBox2.getSelectedItem().equals("Tutte")){
+                        if(jComboBox1.getSelectedItem().equals("Tutte")){
+                            if(jCheckBox1.isSelected()){
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE delivery = true AND prenotazioni = true";
+                                    System.out.println("1.1");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE delivery = true";
+                                    System.out.println("1.2");
+                                }
+                            }else{
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE prenotazioni = true";
+                                    System.out.println("1.3");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti";
+                                    System.out.println("1.4");
+                                }
+                            } 
+                        }else{
+                            if(jCheckBox1.isSelected()){
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE stelle='"+jComboBox1.getSelectedItem()+"' AND delivery = true AND prenotazioni = true";
+                                    System.out.println("2.1");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE stelle='"+jComboBox1.getSelectedItem()+"' AND delivery = true";
+                                    System.out.println("2.2");
+                                }
+                            }else{
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE stelle='"+jComboBox1.getSelectedItem()+"' AND prenotazioni = true";
+                                    System.out.println("2.3");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE stelle='"+jComboBox1.getSelectedItem()+"'";
+                                    System.out.println("2.4");
+                                }
+                            }
+                        }
+                    }else{
+                        if(jComboBox1.getSelectedItem().equals("Tutte")){
+                            if(jCheckBox1.isSelected()){
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia = '"+jComboBox2.getSelectedItem()+"' AND delivery = true AND prenotazioni = true";
+                                    System.out.println("3.1");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia = '"+jComboBox2.getSelectedItem()+"' AND delivery = true";
+                                    System.out.println("3.2");
+                                }
+                            }else{
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia = '"+jComboBox2.getSelectedItem()+"' AND prenotazioni = true";
+                                    System.out.println("3.3");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia = '"+jComboBox2.getSelectedItem()+"'";
+                                    System.out.println("3.4");
+                                }
+                            } 
+                        }else{
+                            if(jCheckBox1.isSelected()){
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia = '"+jComboBox2.getSelectedItem()+"' AND stelle='"+jComboBox1.getSelectedItem()+"' AND delivery = true AND prenotazioni = true";
+                                    System.out.println("4.1");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia='"+jComboBox2.getSelectedItem()+"' AND stelle='"+jComboBox1.getSelectedItem()+"' AND delivery = true";
+                                    System.out.println("4,2");
+                                }
+                            }else{
+                                if(jCheckBox2.isSelected()){
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia='"+jComboBox2.getSelectedItem()+"' AND stelle='"+jComboBox1.getSelectedItem()+"' AND prenotazioni = true";
+                                    System.out.println("4,3");
+                                }else{
+                                    sql="SELECT nome,lati,longi FROM ristoranti WHERE fascia='"+jComboBox2.getSelectedItem()+"' AND stelle='"+jComboBox1.getSelectedItem()+"'";
+                                    System.out.println("4,4");
+                                }
+                            }
+                        }
+                    }
                     rs=stmt.executeQuery(sql);
                     while (rs.next()) {
-                        System.out.println("dentro coordinate");
                         String dataLat=rs.getString("lati");
                         String dataLongi=rs.getString("longi");
                         String nome=rs.getString("nome");
-                        double lat = Double.parseDouble(dataLat);
-                        double lon = Double.parseDouble(dataLongi);
-                        double distance = calculateDistance(inputLat, inputLon, lat, lon);
-                        if ((int)distance <= jSlider1.getValue()) {
-                            System.out.println("calcolo coordinate");
-                            JButton bottone = new JButton();
-                            bottone.setText("franco");
-                            bottone.addActionListener((ActionEvent e) -> {
-                                new VisualizzaRistorante().setVisible(true);
-                            });
-                            jPanel1.add(bottone);
-                        }
+                        JButton bottone = new JButton();
+                        bottone.setText("'"+nome+"'");
+                        bottone.addActionListener((ActionEvent e) -> {
+                            new VisualizzaRistorante(nome,dataLat,dataLongi).setVisible(true);
+                        });
+                        jPanel1.add(bottone);
                     }jPanel1.revalidate();
-                jPanel1.revalidate();
                 } catch (SQLException e) {
-                    new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>" + e.getMessage()).setVisible(true);
+                    new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
                 }
-            }else{
+            } else {
                 jPanel1.removeAll();
                 try {
                     String sql="SELECT lati,longi FROM ristoranti WHERE nome='"+jTextField1.getText()+"'";
@@ -460,7 +539,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
                                     JButton bottone = new JButton();
                                     bottone.setText("'"+nome1+"'");
                                     bottone.addActionListener((ActionEvent e) -> {
-                                        new VisualizzaRistorante().setVisible(true);
+                                        new VisualizzaRistorante(nome1,dataLat,dataLongi).setVisible(true);
                                     });
                                     jPanel1.add(bottone);
                                 }
@@ -472,9 +551,8 @@ public class TheKnifeHome extends javax.swing.JFrame {
                         new Errore("Il ristorante non esiste").setVisible(true);
                     }
                     jPanel1.revalidate();
-                    } catch (SQLException e) {
-                        new Errore("Errore durante la ricerca: " + e.getMessage()).setVisible(true);
-                    }
+                } catch (SQLException e) {
+                    new Errore("Errore durante la ricerca: " + e.getMessage()).setVisible(true);
                 }
             }
         jPanel1.repaint();
@@ -486,7 +564,6 @@ public class TheKnifeHome extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox1;
