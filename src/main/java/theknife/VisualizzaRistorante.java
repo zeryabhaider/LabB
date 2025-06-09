@@ -27,7 +27,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
      */
     public VisualizzaRistorante(String nome,String lati,String longi) {
         initComponents();
-        if(TheKnifeHome.ruolo != null){
+        if(TheKnifeHome.ruolo != null && TheKnifeHome.ruolo.equals("cliente")){
             MostraBottone();
         }else{
             NascondiBottone();
@@ -66,7 +66,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                     int id = rs.getInt("id");
                     System.out.println(rs.getString("testo"));
                     JButton button = new JButton();
-                    button.setText("'"+rs.getString("stelle")+":  "+rs.getString("testo")+"'");
+                    button.setText(rs.getString("stelle")+":  "+rs.getString("testo"));
                     button.addActionListener((ActionEvent e) -> {
                         if(TheKnifeHome.utente!= null){
                             if(TheKnifeHome.utente.equals(email)){

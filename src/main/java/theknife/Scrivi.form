@@ -86,11 +86,11 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="5">
-            <StringItem index="0" value="1 Stella"/>
-            <StringItem index="1" value="2 Stelle"/>
-            <StringItem index="2" value="3 Stelle"/>
-            <StringItem index="3" value="4 Stelle"/>
-            <StringItem index="4" value="5 Stelle"/>
+            <StringItem index="0" value="&#x272d;"/>
+            <StringItem index="1" value="&#x272d;&#x272d;"/>
+            <StringItem index="2" value="&#x272d;&#x272d;&#x272d;"/>
+            <StringItem index="3" value="&#x272d;&#x272d;&#x272d;&#x272d;"/>
+            <StringItem index="4" value="&#x272d;&#x272d;&#x272d;&#x272d;&#x272d;"/>
           </StringArray>
         </Property>
       </Properties>

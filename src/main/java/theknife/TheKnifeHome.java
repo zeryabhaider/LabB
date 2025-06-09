@@ -92,7 +92,12 @@ public class TheKnifeHome extends javax.swing.JFrame {
 
         jCheckBox2.setText("prenotazioni");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "1 Stella", "2 Stelle", "3 Stelle", "4 Stelle", "5 Stelle" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane1.setViewportView(jPanel1);
@@ -267,7 +272,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
                 String dataLongi=rs.getString("longi");
                 String nome=rs.getString("nome");
                 JButton bottone = new JButton();
-                bottone.setText("'"+nome+"'");
+                bottone.setText(nome);
                 bottone.addActionListener((ActionEvent e) -> {
                     new VisualizzaRistorante(nome,dataLat,dataLongi).setVisible(true);
                 });
@@ -302,7 +307,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
                 String dataLongi=rs.getString("longi");
                 String nome=rs.getString("nome");
                 JButton bottone = new JButton();
-                bottone.setText("'"+nome+"'");
+                bottone.setText(nome);
                 bottone.addActionListener((ActionEvent e) -> {
                     new VisualizzaRistorante(nome,dataLat,dataLongi).setVisible(true);
                 });
@@ -324,6 +329,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cercaRistoranti();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     public static String utente= null;
     public static String ruolo=null;
@@ -506,7 +515,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
                         String dataLongi=rs.getString("longi");
                         String nome=rs.getString("nome");
                         JButton bottone = new JButton();
-                        bottone.setText("'"+nome+"'");
+                        bottone.setText(nome);
                         bottone.addActionListener((ActionEvent e) -> {
                             new VisualizzaRistorante(nome,dataLat,dataLongi).setVisible(true);
                         });
@@ -537,7 +546,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
                                 double distance = calculateDistance(inputLat, inputLon, lat, lon);
                                 if((int)distance <= jSlider1.getValue()){
                                     JButton bottone = new JButton();
-                                    bottone.setText("'"+nome1+"'");
+                                    bottone.setText(nome1);
                                     bottone.addActionListener((ActionEvent e) -> {
                                         new VisualizzaRistorante(nome1,dataLat,dataLongi).setVisible(true);
                                     });

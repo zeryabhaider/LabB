@@ -93,7 +93,7 @@ public class AggRist extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 Stelle", "1 stella", "2 Stelle", "3 Stelle", "4 Stelle", "5 Stelle" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "☆", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(200, 22));
 
         jTextField4.setPreferredSize(new java.awt.Dimension(200, 22));

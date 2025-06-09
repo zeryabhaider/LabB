@@ -64,7 +64,7 @@ public class Scrivi extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Stella", "2 Stelle", "3 Stelle", "4 Stelle", "5 Stelle" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
