@@ -43,7 +43,8 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connessione avvenuta con successo!");
             Statement stmt= conn.createStatement();
-            String sql="SELECT * FROM ristoranti WHERE nome='"+nome+"'";
+            String nomemod=nome.replace("'", "''");
+            String sql="SELECT * FROM ristoranti WHERE nome ='"+nomemod+"'";
             ResultSet rs=stmt.executeQuery(sql);
             if(rs.next()){
                 jLabel12.setText(nome);
@@ -54,8 +55,16 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                 jLabel17.setText(longi);
                 jLabel18.setText(rs.getString("n_tell"));
                 jLabel19.setText(rs.getString("cucina"));
-                jLabel20.setText(rs.getString("delivery"));
-                jLabel21.setText(rs.getString("prenotazioni"));
+                if(rs.getBoolean("delivery")){
+                    jLabel20.setText("Disponibile");
+                }else{
+                    jLabel20.setText("Non Disponibile");
+                }
+                if(rs.getBoolean("prenotazioni")){
+                    jLabel21.setText("Disponibile");
+                }else{
+                    jLabel21.setText("Non Disponibile");
+                }
                 jLabel22.setText(rs.getString("fascia"));
                 String email= rs.getString("email_u");
                 id_rist=rs.getInt("id");
@@ -70,9 +79,9 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                     button.addActionListener((ActionEvent e) -> {
                         if(TheKnifeHome.utente!= null){
                             if(TheKnifeHome.utente.equals(email)){
-                            new Scrivi(id).setVisible(true);
+                                new Scrivi(id).setVisible(true);
                             }else{
-                                button.setEnabled(false);
+                                new Risposta(id).setVisible(true);
                             }
                         }
                         
@@ -121,6 +130,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("THE KNIFE");
 
         jLabel1.setText("Nome:");
 
@@ -212,7 +222,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -223,9 +233,9 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,6 +291,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

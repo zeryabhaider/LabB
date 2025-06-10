@@ -33,6 +33,7 @@ public class Errore extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("THE KNIFE");
 
         jLabel1.setText("Errore:");
 

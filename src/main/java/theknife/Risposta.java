@@ -4,28 +4,52 @@
  */
 package theknife;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import theknife.Errore;
+import theknife.Operazione;
+import theknife.TheKnifeHome;
+import theknife.VisualizzaRistorante;
 
 /**
  *
  * @author lucav
  */
-public class Operazione extends javax.swing.JFrame {
+public class Risposta extends javax.swing.JFrame {
 
     /**
-     * Creates new form Operazione
+     * Creates new form Risposta
+     * @param id
      */
-    public Operazione() {
+    public Risposta(int id) {
         initComponents();
-        Timer timer = new Timer(3000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // Chiude questa finestra
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            Statement stmt= conn.createStatement();
+            String sql="SELECT risposta FROM recensioni WHERE id='"+id+"'";
+            try{
+                ResultSet rs= stmt.executeQuery(sql);
+                if(rs.next()){
+                    if(rs.getString("risposta")!=null){
+                        jLabel1.setText(rs.getString("risposta"));
+                    }else{
+                        jLabel1.setText("non esiste ancora una risposta per questo commento");
+                    }
+                }
+            }catch(SQLException e){
+                new Errore("<html>Errore durante la ricerca della risposta:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);
             }
-        });
-        timer.setRepeats(false); // Si attiva solo una volta
-        timer.start();
+            conn.close();
+        } catch (SQLException e) {
+            new Errore("<html>Errore durante la connessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+        }
     }
 
     /**
@@ -42,8 +66,7 @@ public class Operazione extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("THE KNIFE");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Operazione avvenuta con successo");
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -51,21 +74,20 @@ public class Operazione extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

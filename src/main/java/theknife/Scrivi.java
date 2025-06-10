@@ -50,6 +50,7 @@ public class Scrivi extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("THE KNIFE");
 
         jButton1.setBackground(new java.awt.Color(38, 117, 191));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -98,6 +99,7 @@ public class Scrivi extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

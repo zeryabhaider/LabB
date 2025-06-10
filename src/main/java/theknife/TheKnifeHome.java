@@ -58,6 +58,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("THE KNIFE");
 
         jLabel1.setText("Inserisci per cercare");
 
@@ -76,9 +77,9 @@ public class TheKnifeHome extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Vicinanza ");
+        jLabel2.setText("Distanza :");
 
-        jSlider1.setMaximum(10);
+        jSlider1.setMaximum(20);
         jSlider1.setValue(10);
         jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -86,13 +87,15 @@ public class TheKnifeHome extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Fascia di prezzo");
+        jLabel3.setText("Fascia di prezzo :");
 
         jCheckBox1.setText("Delivery");
 
         jCheckBox2.setText("prenotazioni");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "✦ Selected Restaurants", "✪ Bib Gourmand", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
+        jComboBox1.setMinimumSize(new java.awt.Dimension(80, 22));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(80, 22));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -103,8 +106,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jPanel1);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "€", "€€", "€€€", "€€€€" }));
+        jComboBox2.setMinimumSize(new java.awt.Dimension(80, 22));
+        jComboBox2.setPreferredSize(new java.awt.Dimension(80, 22));
 
-        jMenu1.setText("The Knife");
+        jMenu1.setText("Menù");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
@@ -170,37 +175,32 @@ public class TheKnifeHome extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                        .addComponent(jTextField1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(172, 172, 172)
+                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jCheckBox1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(116, 116, 116)
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addGap(15, 15, 15))))
+                                .addComponent(jCheckBox2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +242,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-        jLabel2.setText(String.valueOf(jSlider1.getValue())+"Km");
+        jLabel2.setText("Distanza : "+String.valueOf(jSlider1.getValue())+" Km");
     }//GEN-LAST:event_jSlider1StateChanged
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -527,7 +527,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
             } else {
                 jPanel1.removeAll();
                 try {
-                    String sql="SELECT lati,longi FROM ristoranti WHERE nome='"+jTextField1.getText()+"'";
+                    String nome=jTextField1.getText();
+                    String nomemod=nome.replace("'", "''");
+                    //String sql="SELECT lati,longi FROM ristoranti WHERE nome LIKE'%"+nomemod+"%'";
+                    String sql="SELECT lati,longi FROM ristoranti WHERE nome='"+nomemod+"'";
                     rs=stmt.executeQuery(sql);
                     if (rs.next()) {
                         String inputLati=rs.getString("lati");
@@ -567,7 +570,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
         jPanel1.repaint();
         conn.close();
         } catch (SQLException e) {
-            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+            new Errore("<html>Errore durante la connessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
         }
     }
     

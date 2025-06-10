@@ -55,6 +55,7 @@ public class AggRist extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("THE KNIFE");
 
         jLabel1.setText("Nome:");
 
@@ -93,7 +94,7 @@ public class AggRist extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "☆", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "☆", "✦", "✪", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(200, 22));
 
         jTextField4.setPreferredSize(new java.awt.Dimension(200, 22));
@@ -192,7 +193,7 @@ public class AggRist extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jCheckBox2)
                                         .addGap(10, 10, 10)))))))
-                .addGap(35, 35, 35))
+                .addContainerGap(35, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(171, 171, 171)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
