@@ -66,7 +66,7 @@ public class TheKnife {
         UIManager.put("Slider.focusWidth", 0);
 
         // ✅ Generale
-        UIManager.put("Panel.background", new Color(45, 45, 45));
+        UIManager.put("Panel.background", new Color(20, 20, 20));
         UIManager.put("Label.foreground", Color.WHITE);
         UIManager.put("ScrollPane.background", new Color(45, 45, 45));
         UIManager.put("Component.focusColor", new Color(0, 153, 0));
