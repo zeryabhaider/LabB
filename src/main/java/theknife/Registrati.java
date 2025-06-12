@@ -71,7 +71,7 @@ public class Registrati extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(38, 117, 191));
+        jButton1.setBackground(new java.awt.Color(0, 153, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Registrati");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

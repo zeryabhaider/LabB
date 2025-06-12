@@ -94,7 +94,7 @@ public class AggRist extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "☆", "✦", "✪", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "✦ Selected Restaurants", "✪ Bib Gourmand", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(200, 22));
 
         jTextField4.setPreferredSize(new java.awt.Dimension(200, 22));
@@ -110,7 +110,7 @@ public class AggRist extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(38, 117, 191));
+        jButton1.setBackground(new java.awt.Color(0, 153, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Aggiungi");
         jButton1.setMaximumSize(new java.awt.Dimension(100, 23));

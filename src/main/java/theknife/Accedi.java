@@ -52,7 +52,7 @@ public class Accedi extends javax.swing.JFrame {
 
         jLabel2.setText("Password:");
 
-        jButton1.setBackground(new java.awt.Color(38, 117, 191));
+        jButton1.setBackground(new java.awt.Color(0, 153, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Accedi");
         jButton1.setMaximumSize(new java.awt.Dimension(76, 23));

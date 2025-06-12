@@ -18,6 +18,12 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version> <!-- Sostituisci con l'ultima versione se vuoi -->
         </dependency>
+        <!-- FlatLaf core -->
+        <dependency>
+          <groupId>com.formdev</groupId>
+          <artifactId>flatlaf</artifactId>
+          <version>3.2</version>
+        </dependency>
     </dependencies>
 
     

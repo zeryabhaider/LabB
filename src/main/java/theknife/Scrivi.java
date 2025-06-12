@@ -52,7 +52,7 @@ public class Scrivi extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("THE KNIFE");
 
-        jButton1.setBackground(new java.awt.Color(38, 117, 191));
+        jButton1.setBackground(new java.awt.Color(0, 153, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Invia");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

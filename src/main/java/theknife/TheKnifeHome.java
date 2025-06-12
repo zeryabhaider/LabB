@@ -68,7 +68,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(38, 117, 191));
+        jButton1.setBackground(new java.awt.Color(0, 153, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Cerca");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +79,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
 
         jLabel2.setText("Distanza :");
 
+        jSlider1.setForeground(new java.awt.Color(0, 153, 0));
         jSlider1.setMaximum(20);
         jSlider1.setValue(10);
         jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -91,7 +92,12 @@ public class TheKnifeHome extends javax.swing.JFrame {
 
         jCheckBox1.setText("Delivery");
 
-        jCheckBox2.setText("prenotazioni");
+        jCheckBox2.setText("Prenotazioni");
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tutte", "✦ Selected Restaurants", "✪ Bib Gourmand", "✭", "✭✭", "✭✭✭", "✭✭✭✭", "✭✭✭✭✭" }));
         jComboBox1.setMinimumSize(new java.awt.Dimension(80, 22));
@@ -333,6 +339,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     public static String utente= null;
     public static String ruolo=null;
