@@ -41,15 +41,15 @@ public class TheKnife {
         UIManager.put("ComboBox.arc", 10);
 
         // ✅ CheckBox
-        Color verde = new Color(0, 153, 0); // oppure il verde che preferisci
+        Color verde = new Color(0, 153, 0);                                     
         UIManager.put("CheckBox.background", new Color(45, 45, 45));
         UIManager.put("CheckBox.foreground", Color.WHITE);
         UIManager.put("Component.focusColor", verde);
         UIManager.put("CheckBox.icon.selectedBorderColor", verde);
         UIManager.put("CheckBox.icon.selectedBackground", verde);
-        UIManager.put("CheckBox.icon.selectedCheckmarkColor", Color.WHITE); // colore del ✓
-        UIManager.put("CheckBox.icon.borderColor", Color.GRAY); // bordo normale
-        UIManager.put("CheckBox.icon.background", new Color(45, 45, 45)); // sfondo normale
+        UIManager.put("CheckBox.icon.selectedCheckmarkColor", Color.WHITE);
+        UIManager.put("CheckBox.icon.borderColor", Color.GRAY);
+        UIManager.put("CheckBox.icon.background", new Color(45, 45, 45));
 
         // ✅ Menu
         UIManager.put("MenuItem.selectionBackground", verde);
