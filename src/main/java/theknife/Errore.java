@@ -5,19 +5,25 @@
 package theknife;
 
 /**
+ * Finestra di errore generica per l'applicazione TheKnife.
+ * Mostra un messaggio di errore personalizzato all'interno di una finestra semplice.
+ * Utilizzata per comunicare all'utente eventuali problemi occorsi durante l'esecuzione.
  *
  * @author lucav
  */
 public class Errore extends javax.swing.JFrame {
 
     /**
-     * Creates new form Errore
-     * @param e
+     * Costruttore della finestra di errore.
+     * Inizializza i componenti e imposta il messaggio se fornito.
+     *
+     * @param e Messaggio di errore da visualizzare.
      */
     public Errore(String e) {
         initComponents();
+        // Se un messaggio è stato passato, viene mostrato nell'etichetta
         if(e!=null){
-        jLabel1.setText(e);
+            jLabel1.setText(e);
         }
     }
 
@@ -40,18 +46,18 @@ public class Errore extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addContainerGap(40, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel1)
+                                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();

@@ -13,27 +13,43 @@ import java.sql.Statement;
 import javax.swing.JButton;
 
 /**
+ * Classe VisualizzaRistorante - Estensione di JFrame che visualizza le informazioni
+ * di un ristorante e le relative recensioni.
+ * Permette a un cliente di lasciare commenti o aggiungere il ristorante ai preferiti.
  *
- * @author lucav
+ * Autore: lucav
  */
 public class VisualizzaRistorante extends javax.swing.JFrame {
+    /** ID del ristorante visualizzato, utilizzato per operazioni future (es. preferiti, recensioni) */
     public static int id_rist;
 
     /**
-     * Creates new form VisualizzaRistorante
-     * @param nome
-     * @param lati
-     * @param longi
+     * Costruttore del frame VisualizzaRistorante.
+     * Visualizza i dettagli di un ristorante, incluse coordinate e recensioni.
+     *
+     * @param id    Id del ristorante
+     * @param nome  Nome del ristorante
+     * @param lati  Latitudine
+     * @param longi Longitudine
      */
-    public VisualizzaRistorante(String nome,String lati,String longi) {
+    public VisualizzaRistorante(int id,String nome,String lati,String longi) {
         initComponents();
         if(TheKnifeHome.ruolo != null && TheKnifeHome.ruolo.equals("cliente")){
-            MostraBottone();
+            MostraBottone();// Mostra le opzioni "preferiti" e "commento" solo ai clienti
         }else{
-            NascondiBottone();
+            NascondiBottone();// Nasconde i pulsanti se non è un cliente
         }
-        VisRist(nome,lati,longi);
+        id_rist=id;
+        VisRist(nome,lati,longi);// Chiama metodo che carica i dati del ristorante
     }
+    /**
+     * Metodo che si occupa di interrogare il database e popolare l'interfaccia con
+     * i dati del ristorante e delle sue recensioni.
+     *
+     * @param nome  Nome del ristorante
+     * @param lati  Latitudine
+     * @param longi Longitudine
+     */
     public void VisRist(String nome,String lati,String longi){
         String url = "jdbc:postgresql://localhost:5432/postgres";
         String user = "postgres";
@@ -43,9 +59,10 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connessione avvenuta con successo!");
             Statement stmt= conn.createStatement();
-            String nomemod=nome.replace("'", "''");
-            String sql="SELECT * FROM ristoranti WHERE nome ='"+nomemod+"'";
+            String sql="SELECT * FROM ristoranti WHERE id ="+id_rist+"";
             ResultSet rs=stmt.executeQuery(sql);
+
+            // Popolamento etichette con i dati del ristorante
             if(rs.next()){
                 jLabel12.setText(nome);
                 jLabel13.setText(rs.getString("indirizzo"));
@@ -68,16 +85,20 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                 jLabel22.setText(rs.getString("fascia"));
                 String email= rs.getString("email_u");
                 id_rist=rs.getInt("id");
-                
+
+                // Recupera recensioni ordinate per stelle
                 sql="SELECT * FROM recensioni WHERE id_ristorante='"+id_rist+"'ORDER BY stelle";
                 rs=stmt.executeQuery(sql);
                 while(rs.next()){
                     int id = rs.getInt("id");
                     System.out.println(rs.getString("testo"));
+
+                    // Crea pulsante recensione per ogni riga
                     JButton button = new JButton();
                     button.setText(rs.getString("stelle")+":  "+rs.getString("testo"));
                     button.addActionListener((ActionEvent e) -> {
                         if(TheKnifeHome.utente!= null){
+                            // Se l'autore è lo stesso, consente l'aggiunta di una risposta (Scrivi); altrimenti mostra la risposta (Risposta), se esiste
                             if(TheKnifeHome.utente.equals(email)){
                                 new Scrivi(id).setVisible(true);
                             }else{
@@ -88,7 +109,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                     });
                     jPanel1.add(button);
                 }
-                jPanel1.revalidate();
+                jPanel1.revalidate();// Aggiorna layout del pannello
             }
             jPanel1.revalidate();
         }catch(SQLException e) {
@@ -294,11 +315,17 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo invocato dal menu per scrivere una nuova recensione (ID 0 = nuova).
+     */
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         int id=0;
         new Scrivi(id).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    /**
+     * Metodo invocato dal menu per aggiungere il ristorante ai preferiti dell’utente.
+     */
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         String url = "jdbc:postgresql://localhost:5432/postgres";
         String user = "postgres";
@@ -308,12 +335,15 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connessione avvenuta con successo!");
             Statement stmt= conn.createStatement();
+
+            // Controlla se il ristorante è già tra i preferiti
             String sql="SELECT * FROM preferiti WHERE email_utente ='"+ TheKnifeHome.utente +"' AND id_ristorante='"+id_rist+"'";
             ResultSet rs=stmt.executeQuery(sql);
             if(rs.next()){
                 new Errore("Errore, il ristorante selezionato è già tra i preferiti").setVisible(true);
             }else{
                 try{
+                    // Inserisce nei preferiti
                     sql="INSERT INTO preferiti (email_utente, id_ristorante) VALUES ('"+ TheKnifeHome.utente +"','"+id_rist+"')";
                     int rowsInserted =stmt.executeUpdate(sql);
                     new Operazione().setVisible(true);
@@ -327,10 +357,19 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    /**
+     * Nasconde i bottoni per aggiungere ai preferiti e per lasciare un commento.
+     * Visibile solo agli utenti con ruolo "cliente".
+     */
     public static void NascondiBottone(){
         jMenuItem1.setVisible(false);
         jMenuItem2.setVisible(false);
     }
+
+    /**
+     * Mostra i bottoni per aggiungere ai preferiti e per lasciare un commento.
+     * Visibile solo agli utenti con ruolo "cliente".
+     */
     public static void MostraBottone(){
         jMenuItem1.setVisible(true);
         jMenuItem2.setVisible(true);
