@@ -156,7 +156,7 @@ public class TheKnifeHome extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
-        jMenuItem5.setText("I Miei Risroranti");
+        jMenuItem5.setText("I Miei Ristoranti");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
