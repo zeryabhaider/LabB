@@ -1,4 +1,10 @@
 package theknife;
+/**
+ * Finestra di accesso  per utenti registrati.
+ * Mostra una pagina semplice per l'accesso di clienti e ristoratori
+ *
+ * @author lucav
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;

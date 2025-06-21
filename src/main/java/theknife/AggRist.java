@@ -4,6 +4,13 @@
  */
 // Pacchetto del progetto
 package theknife;
+/**
+ * Finestra di aggiunta dei ristoranti.
+ * Mostra un elenco di campi all'interno di una finestra semplice.
+ * Utilizzata per per la registrazione del ristorante.
+ *
+ * @author lucav
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;
