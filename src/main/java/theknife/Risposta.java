@@ -9,10 +9,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import theknife.Errore;
-import theknife.Operazione;
-import theknife.TheKnifeHome;
-import theknife.VisualizzaRistorante;
 
 /**
  * Classe Risposta che rappresenta una finestra GUI che mostra la risposta
@@ -41,7 +37,6 @@ public class Risposta extends javax.swing.JFrame {
             // Connessione al database
             Connection conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connessione avvenuta con successo!");
-
             Statement stmt = conn.createStatement();
 
             // Query per selezionare la risposta dalla tabella recensioni in base all'id

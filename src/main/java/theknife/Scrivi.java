@@ -123,6 +123,7 @@ public class Scrivi extends javax.swing.JFrame {
         String user = "postgres";
         String password = "1";
         String testo = jTextArea1.getText();
+        String testomod=testo.replace("'", "''");
 
         try {
             // Connessione al database

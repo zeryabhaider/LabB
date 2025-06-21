@@ -104,6 +104,8 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
                             }else{
                                 new Risposta(id).setVisible(true);
                             }
+                        }else{
+                            new Risposta(id).setVisible(true);
                         }
                         
                     });
@@ -175,6 +177,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
 
         jLabel11.setText("Fascia di prezzo:");
 
+        jPanel1.setMaximumSize(new java.awt.Dimension(250, 296));
         jPanel1.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane1.setViewportView(jPanel1);
 
@@ -262,8 +265,8 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)

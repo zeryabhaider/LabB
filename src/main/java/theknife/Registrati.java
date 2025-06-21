@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Finestra per la registrazione di un nuovo utente.
@@ -187,6 +188,7 @@ public class Registrati extends javax.swing.JFrame {
         String data= jTextField4.getText();
         String luogo= jTextField6.getText();
         String ruolo= (String) jComboBox1.getSelectedItem();
+        String passwordCriptata = BCrypt.hashpw(psw, BCrypt.gensalt());
 
         // Parametri connessione database PostgreSQL
         String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -199,25 +201,32 @@ public class Registrati extends javax.swing.JFrame {
             System.out.println("Connessione avvenuta con successo!");
             ResultSet rs= null;
             Statement stmt= conn.createStatement();
+            String nomemod=nome.replace("'", "''");
+            String cognomenomemod=cognome.replace("'", "''");
+            String luogomod=luogo.replace("'", "''");
             // Query per controllare se l'email è già registrata
-            String sql="SELECT * FROM registrazione WHERE email ='"+ email +"'";          // controllo dell' esistenza della mail
-            try{
-                rs=stmt.executeQuery(sql);
-                if(rs.next()){
-                    // Utente già presente: mostra errore
-                    new Errore("L'utente è già stato registrato").setVisible(true);
-                }else{
-                    // Inserimento nuovo utente
-                    sql="INSERT INTO registrazione (nome, cognome,email,password,data_nascita,luogo_domicilio,ruolo) VALUES ('"+nome+"','"+cognome+"','"+email+"','"+psw+"','"+data+"','"+luogo+"','"+ruolo+"')";
-                    int rowsInserted =stmt.executeUpdate(sql);
-                    new Operazione().setVisible(true);// Mostra conferma
+            if(email.contains("@")){
+               String sql="SELECT * FROM registrazione WHERE email ='"+ email +"'";          // controllo dell' esistenza della mail
+                try{
+                    rs=stmt.executeQuery(sql);
+                    if(rs.next()){
+                        // Utente già presente: mostra errore
+                        new Errore("L'utente è già stato registrato").setVisible(true);
+                    }else{
+                        // Inserimento nuovo utente
+                        sql="INSERT INTO registrazione (nome, cognome,email,password,data_nascita,luogo_domicilio,ruolo) VALUES ('"+nomemod+"','"+cognomenomemod+"','"+email+"','"+passwordCriptata+"','"+data+"','"+luogomod+"','"+ruolo+"')";
+                        int rowsInserted =stmt.executeUpdate(sql);
+                        new Operazione().setVisible(true);// Mostra conferma
+                    }
                 }
+                catch(SQLException e){
+                    // Errore durante inserimento dati
+                    new Errore("<html>Errore durante l'inserimento delle credenziali:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+                } 
+            }else{
+                // Errore durante inserimento dell' email
+                new Errore("<html>Errore la sintassi dell' email è errata:</html>").setVisible(true);
             }
-            catch(SQLException e){
-                // Errore durante inserimento dati
-                new Errore("<html>Errore durante l'inserimento delle credenziali:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);
-            }
-
             conn.close();// Chiude la connessione al database
         } catch (SQLException e) {
             // Errore di connessione al database

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class Accedi extends javax.swing.JFrame {
 
@@ -117,6 +118,7 @@ public class Accedi extends javax.swing.JFrame {
         // Lettura input da interfaccia
         String email = jTextField1.getText();
         String psw = jPasswordField1.getText();
+        String passwordCriptata = BCrypt.hashpw(psw, BCrypt.gensalt());
 
         // Parametri di connessione al database PostgreSQL
         String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -127,39 +129,44 @@ public class Accedi extends javax.swing.JFrame {
             // Connessione al database
             Connection conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connessione avvenuta con successo!");
-
             Statement stmt = conn.createStatement();
 
-            // Query SQL per autenticazione
-            String sql = "SELECT * FROM registrazione WHERE email = '" + email + "' AND password = '" + psw + "'";
+            if(email.contains("@")){
+                // Query SQL per autenticazione
+                String sql = "SELECT * FROM registrazione WHERE email = '" + email + "' AND password = '" + passwordCriptata + "'";
 
-            try {
-                ResultSet rs = stmt.executeQuery(sql);
-                TheKnifeHome.utente = email;
+                try {
+                    ResultSet rs = stmt.executeQuery(sql);
+                    TheKnifeHome.utente = email;
 
-                // Recupero ruolo dell'utente
-                sql = "SELECT ruolo FROM registrazione WHERE email='" + email + "'";
-                rs = stmt.executeQuery(sql);
+                    // Recupero ruolo dell'utente
+                    sql = "SELECT ruolo FROM registrazione WHERE email='" + email + "'";
+                    rs = stmt.executeQuery(sql);
 
-                if (rs.next()) {
-                    // Utente esistente, apro la finestra operazioni
-                    new Operazione().setVisible(true);
+                    if (rs.next()) {
+                        // Utente esistente, apro la finestra operazioni
+                        new Operazione().setVisible(true);
 
-                    // Salvo ruolo e mostro i bottoni relativi
-                    TheKnifeHome.ruolo = rs.getString("ruolo");
-                    if (TheKnifeHome.ruolo.equals("cliente")) {
-                        TheKnifeHome.MostraBottoneUtente();
+                        // Salvo ruolo e mostro i bottoni relativi
+                        TheKnifeHome.ruolo = rs.getString("ruolo");
+                        if (TheKnifeHome.ruolo.equals("cliente")) {
+                            TheKnifeHome.MostraBottoneUtente();
+                        } else {
+                            TheKnifeHome.MostraBottoneRist();
+                        }
                     } else {
-                        TheKnifeHome.MostraBottoneRist();
+                        // Nessun risultato = credenziali errate
+                        new Errore("L'utente non esiste").setVisible(true);
                     }
-                } else {
-                    // Nessun risultato = credenziali errate
-                    new Errore("L'utente non esiste").setVisible(true);
+                    Accedi.this.dispose(); // chiude la finestra di login
+                } catch (SQLException e) {
+                    new Errore("<html>Errore durante l'inserimento delle credenziali:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);
                 }
-                Accedi.this.dispose(); // chiude la finestra di login
-            } catch (SQLException e) {
-                new Errore("<html>Errore durante l'inserimento delle credenziali:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+            }else{
+                // Errore durante inserimento dell' email
+                new Errore("<html>Errore la sintassi dell' email è errata:</html>").setVisible(true);
             }
+            
             conn.close(); // chiude la connessione
         } catch (SQLException e) {
             new Errore("<html>Errore durante la connessione al database:<br>\"" + e.getMessage() + "\"</html>").setVisible(true);

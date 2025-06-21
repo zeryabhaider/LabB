@@ -282,6 +282,9 @@ public class AggRist extends javax.swing.JFrame {
         boolean delivery=jCheckBox1.isSelected();
         boolean prenotazioni=jCheckBox2.isSelected();
         String fascia= (String) jComboBox2.getSelectedItem();
+        String nomemod=nome.replace("'", "''");
+        String indirizzomod=indirizzo.replace("'", "''");
+        String luogomod=luogo.replace("'", "''");
 
         // Parametri di connessione al database PostgreSQL
         String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -295,7 +298,7 @@ public class AggRist extends javax.swing.JFrame {
             ResultSet rs= null;
             Statement stmt= conn.createStatement();
             // Controlla se il ristorante esiste già nel database
-            String sql="SELECT * FROM ristoranti WHERE nome ='"+ nome +"' AND indirizzo='"+indirizzo+"'";          // controllo dell' esistenza del ristorante
+            String sql="SELECT * FROM ristoranti WHERE nome ='"+ nomemod +"' AND indirizzo='"+indirizzomod+"'";          // controllo dell' esistenza del ristorante
             try{
                 rs=stmt.executeQuery(sql);
                 if(rs.next()){
@@ -303,7 +306,7 @@ public class AggRist extends javax.swing.JFrame {
                     new Errore("Il ristorante è già stato registrato:").setVisible(true);
                 }else{
                     // Se non esiste, inserisce il nuovo ristorante nel database
-                    sql="INSERT INTO ristoranti (nome, indirizzo, citta, stelle, lati, longi, n_tell, cucina, email_u, delivery, prenotazioni, fascia) VALUES ('"+nome+"','"+indirizzo+"','"+luogo+"','"+stelle+"','"+lati+"','"+longi+"','"+Ntell+"','"+cucina+"','"+TheKnifeHome.utente+"','"+delivery+"','"+prenotazioni+"','"+fascia+"')";
+                    sql="INSERT INTO ristoranti (nome, indirizzo, citta, stelle, lati, longi, n_tell, cucina, email_u, delivery, prenotazioni, fascia) VALUES ('"+nomemod+"','"+indirizzomod+"','"+luogomod+"','"+stelle+"','"+lati+"','"+longi+"','"+Ntell+"','"+cucina+"','"+TheKnifeHome.utente+"','"+delivery+"','"+prenotazioni+"','"+fascia+"')";
                     int rowsInserted =stmt.executeUpdate(sql);
                     // Mostra una finestra che conferma l’operazione riuscita
                     new Operazione().setVisible(true);

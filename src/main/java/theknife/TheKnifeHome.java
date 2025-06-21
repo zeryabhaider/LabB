@@ -4,7 +4,6 @@
  */
 package theknife;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 /**
  * Classe principale della finestra home di THE KNIFE.
@@ -284,6 +285,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
             String sql="SELECT DISTINCT id,nome,lati,longi FROM ristoranti JOIN preferiti ON id= id_ristorante WHERE id_ristorante IN(SELECT id_ristorante FROM preferiti WHERE email_utente='"+utente+"')";
             ResultSet rs=stmt.executeQuery(sql);
             jPanel1.removeAll();
+            JLabel j1=new JLabel();
+            j1.setText("I Miei Preferiti:");
+            j1.setHorizontalAlignment(SwingConstants.CENTER);
+            jPanel1.add(j1);
             // Ciclo sui risultati per creare bottoni dinamici per ogni ristorante
             while (rs.next()) {
                 String dataLat=rs.getString("lati");
@@ -333,6 +338,10 @@ public class TheKnifeHome extends javax.swing.JFrame {
             String sql="SELECT  id,nome,lati,longi FROM ristoranti WHERE email_u='"+utente+"'";
             ResultSet rs=stmt.executeQuery(sql);
             jPanel1.removeAll();
+            JLabel j1=new JLabel();
+            j1.setText("I Miei Ristoranti:");
+            j1.setHorizontalAlignment(SwingConstants.CENTER);
+            jPanel1.add(j1);
             // Ciclo sui risultati e crea bottoni per ogni ristorante
             while (rs.next()) {
                 String dataLat=rs.getString("lati");
