@@ -34,12 +34,14 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
      */
     public VisualizzaRistorante(int id,String nome,String lati,String longi) {
         initComponents();
-        if(TheKnifeHome.ruolo != null && TheKnifeHome.ruolo.equals("cliente")){
-            MostraBottone();// Mostra le opzioni "preferiti" e "commento" solo ai clienti
-        }else{
-            NascondiBottone();// Nasconde i pulsanti se non è un cliente
-        }
         id_rist=id;
+        NascondiBottone();// Nasconde i pulsanti se non è un utente registrato
+        if(TheKnifeHome.ruolo != null && TheKnifeHome.ruolo.equals("cliente")){
+            MostraBottoneCliente();// Mostra le opzioni "Aggiungi ai preferiti" o "Rimuovi dai preferiti" e "lascia un commento" solo ai clienti
+        }
+        if(TheKnifeHome.ruolo != null && TheKnifeHome.ruolo.equals("ristoratore")){
+            MostraBottoneRistoratore();// Mostra l' opzione "Elimina ristorante"
+        }
         VisRist(nome,lati,longi);// Chiama metodo che carica i dati del ristorante
     }
     /**
@@ -150,7 +152,9 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("THE KNIFE");
@@ -205,7 +209,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
 
         jMenu1.setText("Menù");
 
-        jMenuItem1.setText("Aggiungi ai preferiti");
+        jMenuItem1.setText("Aggiungi Ai Preferiti");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -213,13 +217,29 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Lascia commento");
+        jMenuItem3.setText("Rimuovi Dai Preferiti");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem2.setText("Lascia Commento");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem2);
+
+        jMenuItem4.setText("Elimina Ristorante");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
         jMenu1.getAccessibleContext().setAccessibleDescription("");
@@ -359,23 +379,122 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
             new Errore("Errore durante la connessione: " + e.getMessage()).setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+    /**
+     * Metodo invocato dal menu per togliere il ristorante dai preferiti dell’utente.
+     */
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            Statement stmt= conn.createStatement();
+            // Query per ottenere i ristoranti preferiti dall'utente
+            String sql="DELETE FROM preferiti WHERE id_ristorante='"+id_rist+"' AND email_utente='"+TheKnifeHome.utente+"'";
+            int rowsAffected = stmt.executeUpdate(sql);
+            if(rowsAffected>0){
+                new Operazione().setVisible(true);
+            }else{
+                new Errore("<html>Errore nessun elemento eliminato dal database: </html>").setVisible(true);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // Mostra un errore in una finestra popup in caso di problemi con la connessione o query
+            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    /**
+     * Metodo invocato dal menu per eliminare il ristorante.
+     */
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            Statement stmt= conn.createStatement();
+            // Query per ottenere i ristoranti preferiti dall'utente
+            String sql="DELETE FROM ristoranti WHERE id='"+id_rist+"'";
+            int rowsAffected = stmt.executeUpdate(sql);
+            if(rowsAffected>0){
+                new Operazione().setVisible(true);
+            }else{
+                new Errore("<html>Errore nessun elemento eliminato dal database: </html>").setVisible(true);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // Mostra un errore in una finestra popup in caso di problemi con la connessione o query
+            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * Nasconde i bottoni per aggiungere ai preferiti e per lasciare un commento.
      * Visibile solo agli utenti con ruolo "cliente".
      */
-    public static void NascondiBottone(){
-        jMenuItem1.setVisible(false);
-        jMenuItem2.setVisible(false);
+    public static void MostraBottoneRistoratore(){
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            Statement stmt= conn.createStatement();
+
+            // Controlla che il ristoratore sia proprietario del ristorante
+            String sql="SELECT email_u FROM ristoranti WHERE id='"+id_rist+"'";
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs.next()){
+                if(TheKnifeHome.utente.equals(rs.getString("email_u"))){
+                    jMenuItem4.setVisible(true);
+                }
+            }
+        }catch(SQLException e) {
+            new Errore("Errore durante la connessione: " + e.getMessage()).setVisible(true);
+        }
     }
 
     /**
-     * Mostra i bottoni per aggiungere ai preferiti e per lasciare un commento.
+     * Mostra i bottoni per aggiungere o rimuovere i preferiti e per lasciare un commento.
      * Visibile solo agli utenti con ruolo "cliente".
      */
-    public static void MostraBottone(){
-        jMenuItem1.setVisible(true);
+    public static void MostraBottoneCliente(){
         jMenuItem2.setVisible(true);
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "1";
+        try {
+            // Connessione al database
+            Connection conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connessione avvenuta con successo!");
+            Statement stmt= conn.createStatement();
+
+            // Controlla se il ristorante è già tra i preferiti
+            String sql="SELECT * FROM preferiti WHERE email_utente ='"+ TheKnifeHome.utente +"' AND id_ristorante='"+id_rist+"'";
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs.next()){
+                jMenuItem1.setVisible(false);       // aggiungi
+                jMenuItem3.setVisible(true);        // rimuovi
+            }else{
+                jMenuItem1.setVisible(true);
+                jMenuItem3.setVisible(false);
+            }
+        }catch(SQLException e) {
+            new Errore("Errore durante la connessione: " + e.getMessage()).setVisible(true);
+        }
+    }
+    public static void NascondiBottone(){
+        jMenuItem1.setVisible(false);
+        jMenuItem2.setVisible(false);
+        jMenuItem3.setVisible(false);
+        jMenuItem4.setVisible(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -400,10 +519,12 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
+    private static javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private static javax.swing.JMenuItem jMenuItem1;
     private static javax.swing.JMenuItem jMenuItem2;
+    private static javax.swing.JMenuItem jMenuItem3;
+    private static javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
