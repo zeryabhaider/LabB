@@ -65,7 +65,7 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
             ResultSet rs=stmt.executeQuery(sql);
 
             // Popolamento etichette con i dati del ristorante
-            if(rs.next()){
+            if(rs.next()&& rs.getString("id")!=null){
                 jLabel12.setText(nome);
                 jLabel13.setText(rs.getString("indirizzo"));
                 jLabel14.setText(rs.getString("citta"));
@@ -410,28 +410,8 @@ public class VisualizzaRistorante extends javax.swing.JFrame {
      * Metodo invocato dal menu per eliminare il ristorante.
      */
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        String url = "jdbc:postgresql://localhost:5432/postgres";
-        String user = "postgres";
-        String password = "1";
-        
-        try {
-            // Connessione al database
-            Connection conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connessione avvenuta con successo!");
-            Statement stmt= conn.createStatement();
-            // Query per ottenere i ristoranti preferiti dall'utente
-            String sql="DELETE FROM ristoranti WHERE id='"+id_rist+"'";
-            int rowsAffected = stmt.executeUpdate(sql);
-            if(rowsAffected>0){
-                new Operazione().setVisible(true);
-            }else{
-                new Errore("<html>Errore nessun elemento eliminato dal database: </html>").setVisible(true);
-            }
-            conn.close();
-        } catch (SQLException e) {
-            // Mostra un errore in una finestra popup in caso di problemi con la connessione o query
-            new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
-        }
+        Conferma conferma = new Conferma(this);
+        conferma.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**

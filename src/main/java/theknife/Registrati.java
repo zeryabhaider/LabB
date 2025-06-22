@@ -4,11 +4,14 @@
  */
 package theknife;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.Timer;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -232,6 +235,14 @@ public class Registrati extends javax.swing.JFrame {
             // Errore di connessione al database
             new Errore("<html>Errore durante laconnessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
         }
+        // Timer che chiude la finestra dopo 1 secondo dall'invio
+        Timer timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Chiude questa finestra
+            }
+        });
+        timer.setRepeats(false); // Si attiva una sola volta
+        timer.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed

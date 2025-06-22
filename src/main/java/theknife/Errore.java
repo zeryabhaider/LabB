@@ -4,6 +4,10 @@
  */
 package theknife;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 /**
  * Finestra di errore generica per l'applicazione TheKnife.
  * Mostra un messaggio di errore personalizzato all'interno di una finestra semplice.
@@ -24,6 +28,16 @@ public class Errore extends javax.swing.JFrame {
         // Se un messaggio è stato passato, viene mostrato nell'etichetta
         if(e!=null){
             jLabel1.setText(e);
+            if(e.equals("<html> Operazione annullata </html>")){
+                // Timer che chiude la finestra dopo 1 secondo dall'invio
+                Timer timer = new Timer(2000, new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        dispose(); // Chiude questa finestra
+                    }
+                });
+                timer.setRepeats(false); // Si attiva una sola volta
+                timer.start();
+            }
         }
     }
 

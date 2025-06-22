@@ -26,8 +26,8 @@ public class Operazione extends javax.swing.JFrame {
     public Operazione() {
         initComponents();
 
-        // Crea un timer che attende 3000 ms (3 secondi)
-        Timer timer = new Timer(3000, new ActionListener() {
+        // Crea un timer che attende 2000 ms (3 secondi)
+        Timer timer = new Timer(2000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose(); // Chiude la finestra
             }

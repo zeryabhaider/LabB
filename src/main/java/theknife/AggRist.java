@@ -12,11 +12,14 @@ package theknife;
  * @author lucav
  */
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.Timer;
 
 /**
  *
@@ -328,6 +331,14 @@ public class AggRist extends javax.swing.JFrame {
             // Gestione degli errori di connessione o esecuzione SQL
             new Errore("<html>Errore durante la connessione al database: <br>\"" + e.getMessage() + "\"</html>").setVisible(true);
         }
+        // Timer che chiude la finestra dopo 1 secondo dall'invio
+        Timer timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Chiude questa finestra
+            }
+        });
+        timer.setRepeats(false); // Si attiva una sola volta
+        timer.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
