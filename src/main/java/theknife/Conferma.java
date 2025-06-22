@@ -15,10 +15,15 @@ import javax.swing.Timer;
 import static theknife.VisualizzaRistorante.id_rist;
 
 /**
+ * Finestra di conferma per eliminare un ristorante.
+ * Mostra una pagina semplice per l'accesso di clienti e ristoratori
  *
  * @author lucav
  */
 public class Conferma extends javax.swing.JFrame {
+    /**
+     * Variabile privata che memorizza la pagina di origine dalla quale conferma viene chiamata.
+     */
     private JFrame mainFrame;
     /**
      * Creates new form Conferma
@@ -27,7 +32,7 @@ public class Conferma extends javax.swing.JFrame {
         initComponents();
         this.mainFrame = mainFrame;
         
-        // Quando Conferma viene chiusa, chiudiamo anche la finestra principale
+        // Quando Conferma viene chiusa si chiude anche la finestra precedente
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent e) {
@@ -99,7 +104,10 @@ public class Conferma extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Evento attivato quando l'utente preme il bottone "Sì".
+     * Gestisce la rimozione dei negozi tramite query SQL al database.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String url = "jdbc:postgresql://localhost:5432/postgres";
         String user = "postgres";
@@ -133,6 +141,10 @@ public class Conferma extends javax.swing.JFrame {
         timer.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Evento attivato quando l'utente preme il bottone "No".
+     * gestisce un eventuale ripensamento durante la rimozione dei negozi
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new Errore("<html> Operazione annullata </html>").setVisible(true);
         // Timer che chiude la finestra dopo 1 secondo dall'invio
