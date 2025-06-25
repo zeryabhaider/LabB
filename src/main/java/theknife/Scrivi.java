@@ -21,7 +21,10 @@ import javax.swing.Timer;
  * Se id = 0 si inserisce un nuovo commento con valutazione stelle,
  * altrimenti si risponde ad una recensione esistente con l'id fornito.
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class Scrivi extends javax.swing.JFrame {
 

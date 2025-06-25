@@ -17,7 +17,10 @@ import javax.swing.JButton;
  * di un ristorante e le relative recensioni.
  * Permette a un cliente di lasciare commenti o aggiungere il ristorante ai preferiti.
  *
- * Autore: lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class VisualizzaRistorante extends javax.swing.JFrame {
     /** ID del ristorante visualizzato, utilizzato per operazioni future (es. preferiti, recensioni) */

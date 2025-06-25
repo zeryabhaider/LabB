@@ -18,7 +18,10 @@ import static theknife.VisualizzaRistorante.id_rist;
  * Finestra di conferma per eliminare un ristorante.
  * Mostra una pagina semplice per l'accesso di clienti e ristoratori
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class Conferma extends javax.swing.JFrame {
     /**

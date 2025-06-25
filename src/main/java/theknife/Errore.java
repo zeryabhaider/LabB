@@ -13,7 +13,10 @@ import javax.swing.Timer;
  * Mostra un messaggio di errore personalizzato all'interno di una finestra semplice.
  * Utilizzata per comunicare all'utente eventuali problemi occorsi durante l'esecuzione.
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class Errore extends javax.swing.JFrame {
 

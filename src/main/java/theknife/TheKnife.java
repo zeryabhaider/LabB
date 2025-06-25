@@ -11,6 +11,11 @@ import javax.swing.UIManager;
  * Classe principale dell'applicazione TheKnife.
  * Inizializza il look and feel personalizzato con FlatLaf e avvia l'interfaccia utente principale.
  * Tutti i componenti Swing vengono personalizzati tramite UIManager per applicare uno stile coerente.
+ * 
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class TheKnife {
 

@@ -21,7 +21,10 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * Campi richiesti: nome, cognome, email, password, data di nascita, domicilio, ruolo.
  *
- * Autore: lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class Registrati extends javax.swing.JFrame {
 

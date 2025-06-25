@@ -3,7 +3,10 @@ package theknife;
  * Finestra di accesso  per utenti registrati.
  * Mostra una pagina semplice per l'accesso di clienti e ristoratori
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 
 import java.awt.event.ActionEvent;

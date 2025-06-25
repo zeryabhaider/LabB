@@ -18,7 +18,10 @@ import javax.swing.SwingConstants;
  * Classe principale della finestra home di THE KNIFE.
  * Permette la ricerca di ristoranti con diversi filtri e opzioni.
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class TheKnifeHome extends javax.swing.JFrame {
 

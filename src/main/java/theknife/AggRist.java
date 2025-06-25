@@ -9,7 +9,10 @@ package theknife;
  * Mostra un elenco di campi all'interno di una finestra semplice.
  * Utilizzata per per la registrazione del ristorante.
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 
 import java.awt.event.ActionEvent;

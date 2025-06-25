@@ -14,7 +14,10 @@ import java.awt.event.ActionListener;
  *
  * Usata per notificare rapidamente l'utente senza richiedere interazione.
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class Operazione extends javax.swing.JFrame {
 

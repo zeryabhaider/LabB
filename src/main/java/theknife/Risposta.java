@@ -14,7 +14,10 @@ import java.sql.Statement;
  * Classe Risposta che rappresenta una finestra GUI che mostra la risposta
  * ad una recensione presa dal database in base all'id fornito.
  *
- * @author lucav
+ * @author Afzal Mahrukh
+ * @author Girardi Verdiana
+ * @author Syed Zeryab Haider
+ * @author Vigano' Luca
  */
 public class Risposta extends javax.swing.JFrame {
 
