@@ -30,6 +30,7 @@ public class Conferma extends javax.swing.JFrame {
     private JFrame mainFrame;
     /**
      * Creates new form Conferma
+     * @param mainFrame
      */
     public Conferma(JFrame mainFrame) {
         initComponents();
